@@ -9,20 +9,26 @@ public class MoveScript : MonoBehaviour {
 	public float posMin ;
 	public float posMax ;
 	public float speed ;
+	private float currentSpeed;
 
  
 	void Start () {
-
+		currentSpeed = speed;
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-			if ((transform.position.y < posMin || transform.position.y > posMax)) {
-						speed *= -1;
+			if (transform.position.y < posMin) {
+				currentSpeed = speed;
 						
-				}
+			}
+			else if (transform.position.y > posMax)
+			{
+				currentSpeed = speed*-1;
+			}
+
 
 
 
@@ -31,7 +37,7 @@ public class MoveScript : MonoBehaviour {
 	void FixedUpdate()
 	{
 
-		transform.Translate (new Vector3 (speed * Time.deltaTime,0.0f, 0.0f));
+		transform.Translate (new Vector3 (currentSpeed * Time.deltaTime,0.0f, 0.0f));
 	}
 	
 }
