@@ -24,6 +24,7 @@ public class PlayerScript : MonoBehaviour
 											new Vector2(0f, gravity),//Haut
 											new Vector2(-gravity, 0f)};//Droite
 
+
 	void Update()
 	{
 		// 3 - Récupérer les informations du clavier/manette
@@ -73,8 +74,7 @@ public class PlayerScript : MonoBehaviour
 						Application.LoadLevel (Application.loadedLevel);
 				}
 		else if (collider.gameObject.GetComponent<EndDoorScript> ()) {
-			Debug.Log("Door Touched !");
-			Application.Quit();
+			collider.gameObject.GetComponent<EndDoorScript> ().EndLevel();
 		}
 	}
 	void FixedUpdate()
