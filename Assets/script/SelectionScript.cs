@@ -13,7 +13,7 @@ public class SelectionScript : MonoBehaviour
         const int NbLvlLigne = 5;
         int x = 0;
 
-        DirectoryInfo dir = new DirectoryInfo(@"D:\COURS INGESUP\GraviTouch Git\gravitouch\Assets\scene\Niveaux");
+        DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
         FileInfo[] fichiers = dir.GetFiles("*.unity");
 
         foreach (FileInfo fichier in fichiers)
