@@ -72,6 +72,10 @@ public class PlayerScript : MonoBehaviour
 						Destroy (gameObject);
 						Application.LoadLevel (Application.loadedLevel);
 				}
+		else if (collider.gameObject.GetComponent<EndDoorScript> ()) {
+			Debug.Log("Door Touched !");
+			Application.Quit();
+		}
 	}
 	void FixedUpdate()
 	{
