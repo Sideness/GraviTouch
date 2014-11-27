@@ -17,6 +17,14 @@ public class SelectionScript : MonoBehaviour
 		Application.LoadLevel(fichiers[indexLevel].Name.Substring(0, fichiers[indexLevel].Name.Length - 6));
 	}
 
+	public static void resetLevel(){
+		
+		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
+		FileInfo[] fichiers = dir.GetFiles("*.unity");
+		
+		Application.LoadLevel(fichiers[indexLevel].Name.Substring(0, fichiers[indexLevel].Name.Length - 6));
+	}
+
     void OnGUI()
     {
         const int buttonWidth = 84;
