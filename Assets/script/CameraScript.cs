@@ -8,12 +8,19 @@ public class CameraScript : MonoBehaviour {
 	private Vector2 movement = new Vector2();
 	public float smoothTime = 0.3F;
 	public float zoomSpeed = 1.0F;
+	public static float gravity = 9.89f;
 	public static float defaultZoom = 9.0F;
 	private float currentZoom = 0f;
 	private Vector3 velocity = Vector3.zero;
+	public static Vector2[] gravityDirections = new []{new Vector2(0f, -gravity), //Normal
+		new Vector2(gravity, 0f),//Gauche 											
+		new Vector2(0f, gravity),//Haut
+		new Vector2(-gravity, 0f)};//Droite
+	public static int selectedGravity = 0;
 	// Use this for initialization
 	void Start () {
-		
+		selectedGravity = 0;
+		Physics2D.gravity = gravityDirections [selectedGravity];
 	}
 	
 	// Update is called once per frame
@@ -35,20 +42,20 @@ public class CameraScript : MonoBehaviour {
 			
 			if (Input.GetButtonDown ("CameraZoomPlus")) 
 			{
-				currentZoom = zoomSpeed;
-				Debug.Log ("ZoomPlus = " + currentZoom);
+				currentZoom = zoomSpeed* -1;
+
 			}
 			else if (Input.GetButtonDown ("CameraZoomMinus")) 
 			{
-					currentZoom = zoomSpeed * -1;
-				Debug.Log ("ZoomMinus = " + currentZoom);
+					currentZoom = zoomSpeed ;
+
 			}
 		
 		
 		float inputX = Input.GetAxis("Horizontal");
 		float inputY = Input.GetAxis ("Vertical");
 		movement = new Vector2(speedFreeCamera.x * inputX, speedFreeCamera.y* inputY);
-		
+			movement=applyGravity (movement);
 
 		}
 	}
@@ -66,4 +73,20 @@ public class CameraScript : MonoBehaviour {
 				}
 		
 	}
+
+	public static Vector2 applyGravity(Vector2 vector)
+	{
+		if (CameraScript.selectedGravity == 1) {
+			float tmpX = vector.x;
+			vector.x = vector.y;
+			vector.y = tmpX;
+		} else if (CameraScript.selectedGravity == 2)
+			vector *= -1;
+		else if (CameraScript.selectedGravity == 3) {
+			float tmpX = vector.x;
+			vector.x = -vector.y;
+			vector.y = -tmpX;
+		}
+		return vector;
+		}
 }

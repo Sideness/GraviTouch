@@ -11,23 +11,18 @@ public class PlayerScript : MonoBehaviour
 	/// </summary>
 	public Vector2 speed = new Vector2(50, 50);
 	private static int rotationIndex = -1;
-	public static float gravity = 9.89f;
+
 	private bool isCntrolable = true;
 
-	public static int selectedGravity = 0;
+
 	// 2 - Stockage du mouvement
 	private Vector2 movement;
 	private bool RightOrLeft; // Right = 0 , Left = 1;
 	private float rotation = 0;
 	private bool changeGravity = false;
-	private Vector2[] gravityDirections = new []{new Vector2(0f, -gravity), //Normal
-											new Vector2(gravity, 0f),//Gauche 											
-											new Vector2(0f, gravity),//Haut
-											new Vector2(-gravity, 0f)};//Droite
 
 	void Start(){
-		selectedGravity = 0;
-		Physics2D.gravity = gravityDirections [selectedGravity];
+
 	}
 
 
@@ -42,18 +37,8 @@ public class PlayerScript : MonoBehaviour
 						movement = new Vector2 (
 			speed.x * inputX,
 			0);
-						if (selectedGravity == 1) {
-								float tmpX = movement.x;
-								movement.x = movement.y;
-								movement.y = tmpX;
-						} else if (selectedGravity == 2)
-								movement *= -1;
-						else if (selectedGravity == 3) {
-								float tmpX = movement.x;
-								movement.x = -movement.y;
-								movement.y = -tmpX;
-						}
 
+			movement = CameraScript.applyGravity (movement);
 
 
 						if (Input.GetButtonDown ("RotateRight")) {
@@ -110,7 +95,7 @@ public class PlayerScript : MonoBehaviour
 				}
 		}
 				if (Camera.current != null) {
-						var target = Quaternion.Euler (0, 0, selectedGravity * 90);
+						var target = Quaternion.Euler (0, 0, CameraScript.selectedGravity * 90);
 						Camera.current.transform.rotation = Quaternion.Slerp (Camera.current.transform.rotation, target,
 			                                                      Time.deltaTime * 5);
 //			if(rotationIndex <=)
@@ -126,15 +111,15 @@ public class PlayerScript : MonoBehaviour
 	private void Rotate(bool RightOrLeft)
 	{
 		int direction = ( RightOrLeft ? -1 : 1);
-		selectedGravity += direction;
+		CameraScript.selectedGravity += direction;
 
 
-		if (selectedGravity > 3)
-						selectedGravity = 0;
-				else if (selectedGravity < 0)
-						selectedGravity = 3;
+		if (CameraScript.selectedGravity > 3)
+			CameraScript.selectedGravity = 0;
+		else if (CameraScript.selectedGravity < 0)
+			CameraScript.selectedGravity = 3;
 
-		Physics2D.gravity = gravityDirections [selectedGravity];
+		Physics2D.gravity = CameraScript.gravityDirections [CameraScript.selectedGravity];
 
 	}
 }
