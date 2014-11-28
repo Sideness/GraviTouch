@@ -30,7 +30,9 @@ public class CameraScript : MonoBehaviour {
 		if (Input.GetButtonDown ("FreeCamera")) {
 			Debug.Log ("FreeCamera");
 			freeCamera = freeCamera?false:true ;
-			GameObject.Find("Perso").GetComponent<PlayerScript>().setControlable(!freeCamera);
+			PlayerScript player = GameObject.Find("Perso").GetComponent<PlayerScript>();
+				if (player != null)
+					player.setControlable(!freeCamera);
 			
 		}
 
@@ -62,14 +64,21 @@ public class CameraScript : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		if (freeCamera && Camera.current != null) {
-			Vector3 targetPosition = new Vector3(Camera.current.transform.position.x + movement.x,
+
+
+
+		if (Camera.current != null && GameObject.Find("Directional light") != null) {
+			GameObject.Find("Directional light").GetComponent<Light>().transform.position = Camera.current.transform.position;
+						if (freeCamera) {
+								Vector3 targetPosition = new Vector3 (Camera.current.transform.position.x + movement.x,
 			                                                           Camera.current.transform.position.y + movement.y,
 			                                                           Camera.current.transform.position.z);
 
-			Camera.current.transform.position =  Vector3.SmoothDamp(transform.position,targetPosition,ref velocity, smoothTime);
-			Camera.current.orthographicSize += currentZoom;
-			currentZoom=0;
+								Camera.current.transform.position = Vector3.SmoothDamp (transform.position, targetPosition, ref velocity, smoothTime);
+
+								Camera.current.orthographicSize += currentZoom;
+								currentZoom = 0;
+						}
 				}
 		
 	}
