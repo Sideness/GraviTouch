@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
 	public Vector2 speed = new Vector2(50, 50);
 	private static int rotationIndex = -1;
 	public static float gravity = 9.89f;
+	private bool isCntrolable = true;
 
 	public static int selectedGravity = 0;
 	// 2 - Stockage du mouvement
@@ -27,36 +28,37 @@ public class PlayerScript : MonoBehaviour
 
 	void Update()
 	{
-		// 3 - Récupérer les informations du clavier/manette
-		float inputX = Input.GetAxis("Horizontal");
+		if (isCntrolable) {
+						// 3 - Récupérer les informations du clavier/manette
+						float inputX = Input.GetAxis ("Horizontal");
 
 
-		// 4 - Calcul du mouvement
-		movement = new Vector2(
+						// 4 - Calcul du mouvement
+						movement = new Vector2 (
 			speed.x * inputX,
 			0);
-		if (selectedGravity == 1) {
-						float tmpX = movement.x;
-						movement.x = movement.y;
-						movement.y = tmpX;
-				} else if (selectedGravity == 2)
-						movement *= -1;
-				else if (selectedGravity == 3)
-				{
-					float tmpX = movement.x;
-					movement.x = -movement.y;
-					movement.y = -tmpX;
-				}
+						if (selectedGravity == 1) {
+								float tmpX = movement.x;
+								movement.x = movement.y;
+								movement.y = tmpX;
+						} else if (selectedGravity == 2)
+								movement *= -1;
+						else if (selectedGravity == 3) {
+								float tmpX = movement.x;
+								movement.x = -movement.y;
+								movement.y = -tmpX;
+						}
 
 
 
-		if (Input.GetButtonDown ("RotateRight")) {
-						changeGravity = true;
-						RightOrLeft = false;
+						if (Input.GetButtonDown ("RotateRight")) {
+								changeGravity = true;
+								RightOrLeft = false;
 						
-				} else	if (Input.GetButtonDown ("RotateLeft")) {
-						changeGravity = true;
-						RightOrLeft = true;
+						} else	if (Input.GetButtonDown ("RotateLeft")) {
+								changeGravity = true;
+								RightOrLeft = true;
+						}
 				}
 
 
@@ -77,30 +79,42 @@ public class PlayerScript : MonoBehaviour
 			collider.gameObject.GetComponent<EndDoorScript> ().EndLevel();
 		}
 	}
+
+	public void setControlable(bool isControlable)
+	{
+		isCntrolable = isControlable;
+	}
+
 	void FixedUpdate()
 	{
 		// 5 - Déplacement
-		rigidbody2D.velocity = movement;
-		if(Camera.current != null)
-			Camera.current.transform.position = new Vector3(rigidbody2D.position.x, rigidbody2D.position.y,-10f);
-
-
-
-		if (changeGravity)
+		if (isCntrolable)
 		{
-			Rotate(RightOrLeft);
-			rotationIndex = 0;
-			changeGravity = false;
+						rigidbody2D.velocity = movement;
+				if (Camera.current != null)
+			{
+						Camera.current.transform.position = new Vector3 (rigidbody2D.position.x, rigidbody2D.position.y, -10f);
+						Camera.current.orthographicSize = CameraScript.defaultZoom;
+			}
+
+
+
+				if (changeGravity) {
+						Rotate (RightOrLeft);
+						rotationIndex = 0;
+						changeGravity = false;
+				}
 		}
-		if (Camera.current != null) {
-			var target = Quaternion.Euler (0, 0, selectedGravity * 90);
-			Camera.current.transform.rotation = Quaternion.Slerp (Camera.current.transform.rotation, target,
+				if (Camera.current != null) {
+						var target = Quaternion.Euler (0, 0, selectedGravity * 90);
+						Camera.current.transform.rotation = Quaternion.Slerp (Camera.current.transform.rotation, target,
 			                                                      Time.deltaTime * 5);
 //			if(rotationIndex <=)
 //				Camera.current.orthographicSize += 0.1f;
 //			else
 //						Camera.current.orthographicSize -= 0.1f;
 				}
+		
 
 	}
 
