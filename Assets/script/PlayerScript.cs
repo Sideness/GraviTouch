@@ -25,6 +25,11 @@ public class PlayerScript : MonoBehaviour
 											new Vector2(0f, gravity),//Haut
 											new Vector2(-gravity, 0f)};//Droite
 
+	void Start(){
+		selectedGravity = 0;
+		Physics2D.gravity = gravityDirections [selectedGravity];
+	}
+
 
 	void Update()
 	{
@@ -70,13 +75,12 @@ public class PlayerScript : MonoBehaviour
 	{
 		Debug.Log(collider.gameObject.GetType().ToString());
 		if (collider.gameObject.GetComponent<BadScript> ()) {
-			selectedGravity = 1;
-						Rotate(true);
-						Destroy (gameObject);
-						Application.LoadLevel (Application.loadedLevel);
-				}
+			collider.gameObject.GetComponent<BadScript> ().ResetLevel();
+			Object.Destroy(this);
+		}
 		else if (collider.gameObject.GetComponent<EndDoorScript> ()) {
 			collider.gameObject.GetComponent<EndDoorScript> ().EndLevel();
+			Object.Destroy(this);
 		}
 	}
 

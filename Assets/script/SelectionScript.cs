@@ -6,6 +6,25 @@ using UnityEngine;
 /// </summary>
 public class SelectionScript : MonoBehaviour
 {
+	protected static int indexLevel = 0;
+
+	public static void nextLevel(){
+		indexLevel++;
+
+		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
+		FileInfo[] fichiers = dir.GetFiles("*.unity");
+
+		Application.LoadLevel(fichiers[indexLevel].Name.Substring(0, fichiers[indexLevel].Name.Length - 6));
+	}
+
+	public static void resetLevel(){
+		
+		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
+		FileInfo[] fichiers = dir.GetFiles("*.unity");
+		
+		Application.LoadLevel(fichiers[indexLevel].Name.Substring(0, fichiers[indexLevel].Name.Length - 6));
+	}
+
     void OnGUI()
     {
         const int buttonWidth = 84;
@@ -16,6 +35,7 @@ public class SelectionScript : MonoBehaviour
         DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
         FileInfo[] fichiers = dir.GetFiles("*.unity");
 
+		int cptLevel = 0;
         foreach (FileInfo fichier in fichiers)
         {
                 
@@ -36,9 +56,10 @@ public class SelectionScript : MonoBehaviour
                 // Sur le clic, on démarre le premier niveau
                 // "Stage1" est le nom de la première scène que nous avons créés.
                 Debug.Log("NameScene : " + fichier.Name.Substring(0, fichier.Name.Length - 6));
+				indexLevel = cptLevel;
                 Application.LoadLevel(fichier.Name.Substring(0, fichier.Name.Length - 6));
-                    
             }
+			cptLevel++;
         }
     }
 }
