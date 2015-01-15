@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BadScript : MonoBehaviour {
@@ -20,6 +20,7 @@ public class BadScript : MonoBehaviour {
 	
 	void OnGUI(){
 		if (displayGUI) {
+<<<<<<< HEAD
 			GUI.Label (new Rect (Screen.width / 2 - 50, Screen.width / 2 - 50, 100, 50), "Vous etes mort !");
 			if (GUI.Button (new Rect (Screen.width / 2 - 50, Screen.width / 2 - 25, 100, 50), "Recommencer")) {
 				SelectionScript.resetLevel();
@@ -30,6 +31,10 @@ public class BadScript : MonoBehaviour {
 			if (GUI.Button (new Rect (Screen.width / 2 - 150, Screen.width / 2 - 25, 100, 50), "Quitter")) {
 				Application.Quit();
 			}
+=======
+			new ControllerMenu().display();
+>>>>>>> b60d0d5fccc87d3945fa247b1ed56074303ac8c3
 		}
+
 	}
 }
