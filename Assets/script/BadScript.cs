@@ -24,6 +24,12 @@ public class BadScript : MonoBehaviour {
 			if (GUI.Button (new Rect (Screen.width / 2 - 50, Screen.width / 2 - 25, 100, 50), "Recommencer")) {
 				SelectionScript.resetLevel();
 			}
+			if (GUI.Button (new Rect (Screen.width / 2 + 50, Screen.width / 2 - 25, 100, 50), "Menu")) {
+				Application.LoadLevel("menu");
+			}
+			if (GUI.Button (new Rect (Screen.width / 2 - 150, Screen.width / 2 - 25, 100, 50), "Quitter")) {
+				Application.Quit();
+			}
 		}
 	}
 }
