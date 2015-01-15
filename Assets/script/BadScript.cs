@@ -19,11 +19,9 @@ public class BadScript : MonoBehaviour {
 	}
 	
 	void OnGUI(){
-
 		if (displayGUI) {
-
-			//DO STUFF !!! 
-
+			new ControllerMenu().display();
 		}
+
 	}
 }
