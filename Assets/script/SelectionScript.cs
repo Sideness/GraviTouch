@@ -89,7 +89,7 @@ public class SelectionScript : MonoBehaviour
 
 			if (rect.Contains (Event.current.mousePosition))
 				indexLevel = cptLevel;
-			new SelectLevelItem("Niveau "+cptLevel, cptLevel % 4,cptLevel % 2 == 0).display(rect,cptLevel == indexLevel);
+			new SelectLevelItem(fichier.Name.Remove (fichier.Name.IndexOf (".")), cptLevel % 4,cptLevel % 2 == 0).display(rect,cptLevel == indexLevel);
 
 			cptLevel++;
 			

@@ -14,8 +14,10 @@ public class SelectLevelItem : MonoBehaviour {
 		char chronoChar = '0';
 		if (Chrono)
 			chronoChar = '1';
+
+
 		string texture = @"Assets\Texture\Menu\"+nbStar+"_"+chronoChar+".png";
-		 aTexture = (Texture2D)Resources.LoadAssetAtPath(texture, typeof(Texture2D));
+		aTexture = Resources.Load ("Texture/Menu/" + nbStar + "_" + chronoChar) as Texture2D;
 		show = false;
 	}
 
