@@ -20,7 +20,7 @@ public class BadScript : MonoBehaviour {
 	
 	void OnGUI(){
 		if (displayGUI) {
-			new ControllerMenu().display();
+			new PopUpScript().display();
 		}
 
 	}
