@@ -1,11 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\script\PopUpScript.cs">
     <Files>
-      <File FileName="Assets\script\SelectionScript.cs" Line="204" Column="1" />
-      <File FileName="Assets\script\BadScript.cs" Line="27" Column="11" />
-      <File FileName="Assets\script\ControllerMenu.cs" Line="26" Column="1" />
-      <File FileName="Assets\script\PopUpScript.cs" Line="38" Column="13" />
+      <File FileName="Assets\script\EndDoorScript.cs" Line="48" Column="51" />
+      <File FileName="Assets\script\PopUpScript.cs" Line="37" Column="24" />
+      <File FileName="Assets\script\SelectionScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\BadScript.cs" Line="13" Column="8" />
+      <File FileName="Assets\script\ControllerMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\script\SelectLevelItem.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

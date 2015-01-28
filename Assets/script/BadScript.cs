@@ -2,11 +2,15 @@ using UnityEngine;
 using System.Collections;
 
 public class BadScript : MonoBehaviour {
-	
+	private PopUpScript myDeathPopUp;
 	private bool displayGUI = false;
 	// Use this for initialization
 	void Start () {
-		
+		myDeathPopUp = new PopUpScript();
+		myDeathPopUp.Bind(delegate(){SelectionScript.resetLevel();}, //boutonA
+		delegate(){Application.Quit();}, //boutonB
+		delegate(){Application.LoadLevel("menu");},
+		null);
 	}
 	
 	// Update is called once per frame
@@ -20,13 +24,7 @@ public class BadScript : MonoBehaviour {
 	
 	void OnGUI(){
 		if (displayGUI) {
-			PopUpScript myDeathPopUp = new PopUpScript();
-			myDeathPopUp.Bind(delegate(){SelectionScript.resetLevel();}, //boutonA
-								delegate(){Application.Quit();}, //boutonB
-								delegate(){Application.LoadLevel("menu");},
-								null);
-
-			myDeathPopUp.display("Recommencer", "Quitter", "Menu", "", "Vous etes mort");
+			myDeathPopUp.display("Recommencer", "Quitter", "Menu", "", "Game Over");
 		}
 
 	}
