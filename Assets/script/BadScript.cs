@@ -20,7 +20,13 @@ public class BadScript : MonoBehaviour {
 	
 	void OnGUI(){
 		if (displayGUI) {
-			new PopUpScript().display();
+			PopUpScript myDeathPopUp = new PopUpScript();
+			myDeathPopUp.Bind(delegate(){SelectionScript.resetLevel();}, //boutonA
+								delegate(){Application.Quit();}, //boutonB
+								delegate(){Application.LoadLevel("menu");},
+								null);
+
+			myDeathPopUp.display("Recommencer", "Quitter", "Menu", "", "Vous etes mort");
 		}
 
 	}

@@ -18,17 +18,18 @@ public class SelectionScript : MonoBehaviour
 	private int selectedAddedSize= 14;
 	private static bool canMove = true;
 	private static Timer aTimer;
-
+	private bool mouseOnLevel = false;
 	public	float ColorMaxInit = 200;
 	public float ColorMinInit = 30;
-
+	
 	private static float colorMax;
 	private static float colorMin;
 	private static int colorState = 0;
 	private static float colorStep = 0.01f;
-
+	FileInfo[] fichiers;
+	
 	private Color color = new Color(colorMax,colorMin,colorMin);
-
+	
 	public static void nextLevel(){
 		indexLevel++;
 		
@@ -45,22 +46,22 @@ public class SelectionScript : MonoBehaviour
 		
 		Application.LoadLevel(fichiers[indexLevel].Name.Substring(0, fichiers[indexLevel].Name.Length - 6));
 	}
-
+	
 	public SelectionScript()
 	{
 		colorMax = ColorMaxInit/255f;
 		colorMin = ColorMinInit/255f;
-		}
-
+	}
+	
 	void Start()
 	{
-
-
+		
+		
 		if (Camera.current != null)
-		Camera.current.backgroundColor = new Color(colorMax,colorMin,colorMin);
-
-
-
+			Camera.current.backgroundColor = new Color(colorMax,colorMin,colorMin);
+		
+		
+		
 	}
 	
 	void OnGUI()
@@ -69,8 +70,8 @@ public class SelectionScript : MonoBehaviour
 		int y = 0;
 		
 		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
-		FileInfo[] fichiers = dir.GetFiles("*.unity");
-		
+		fichiers = dir.GetFiles("*.unity");
+		mouseOnLevel = false;
 		int cptLevel = 0;
 		foreach (FileInfo fichier in fichiers)
 		{
@@ -86,32 +87,40 @@ public class SelectionScript : MonoBehaviour
 				buttonWidth,
 				buttonHeight
 				);
-
+			
 			if (rect.Contains (Event.current.mousePosition))
+			{
 				indexLevel = cptLevel;
+				mouseOnLevel = true;
+			}
+			
+			
 			new SelectLevelItem(fichier.Name.Remove (fichier.Name.IndexOf (".")), cptLevel % 4,cptLevel % 2 == 0).display(rect,cptLevel == indexLevel);
-
+			
 			cptLevel++;
 			
-
+			
 		}
-
-
+		
+		
 	}
-
+	
 	void FixedUpdate()
 	{
 		if (Camera.current != null)
-		Camera.current.backgroundColor = color;
-		}
-
+			Camera.current.backgroundColor = color;
+	}
+	
 	void Update()
 	{
-
-
+		if (Input.GetMouseButtonDown(0) && mouseOnLevel)
+		{
+			Application.LoadLevel(fichiers[indexLevel].Name.Remove(fichiers[indexLevel].Name.IndexOf (".")));
+		}
+		
 		if (Camera.current != null) {
 			color = Camera.current.backgroundColor;
-		
+			
 			switch (colorState) {
 				
 			case 0:
@@ -155,40 +164,40 @@ public class SelectionScript : MonoBehaviour
 				break;
 			}
 			
-
-		}
-
-			if (canMove) {
-						float inputX = Input.GetAxis ("Horizontal");
 			
-						canMove = false;
-						if (inputX > 0) 
-								indexLevel ++;
-						else if (inputX < 0)
-								indexLevel--;
-						else
-						{
-							canMove= true;
-							return;
-						}
-
-						
-						aTimer = new Timer (200);
+		}
 		
-		
-						aTimer.Elapsed += new ElapsedEventHandler (OnTimedEvent);
-						aTimer.Enabled = true;
-						
-						
-				}
+		if (canMove) {
+			float inputX = Input.GetAxis ("Horizontal");
+			
+			canMove = false;
+			if (inputX > 0) 
+				indexLevel ++;
+			else if (inputX < 0)
+				indexLevel--;
+			else
+			{
+				canMove= true;
+				return;
+			}
+			
+			
+			aTimer = new Timer (200);
+			
+			
+			aTimer.Elapsed += new ElapsedEventHandler (OnTimedEvent);
+			aTimer.Enabled = true;
+			
+			
+		}
 		
 	}
-
+	
 	private static void OnTimedEvent(object source, ElapsedEventArgs e)
 	{
 		canMove = true;
 		aTimer.Enabled = false;
 	}
-
+	
 }
 
