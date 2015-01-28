@@ -20,16 +20,13 @@ public class EndDoorScript : MonoBehaviour {
 
 	void OnGUI(){
 		if (displayGUI) {
-			GUI.Label (new Rect (Screen.width / 2 - 50, Screen.width / 2 - 50, 100, 50), "Niveau Terminé !");
-			if (GUI.Button (new Rect (Screen.width / 2 - 50, Screen.width / 2 - 25, 100, 50), "Continuer")) {
-				SelectionScript.nextLevel();
-			}
-			if (GUI.Button (new Rect (Screen.width / 2 + 50, Screen.width / 2 - 25, 100, 50), "Menu")) {
-				Application.LoadLevel("menu");
-			}
-			if (GUI.Button (new Rect (Screen.width / 2 - 150, Screen.width / 2 - 25, 100, 50), "Quitter")) {
-				Application.Quit();
-			}
+			PopUpScript mySuccessPopUp = new PopUpScript();
+			mySuccessPopUp.Bind(delegate(){SelectionScript.nextLevel();}, //boutonA
+			delegate(){Application.Quit();}, //boutonB
+			delegate(){Application.LoadLevel("menu");},
+			null);
+			
+			mySuccessPopUp.display("Niveau suivant", "Quitter", "Menu", "", "Niveau terminé");
 		}
 	}
 }
