@@ -26,6 +26,5 @@ public class BadScript : MonoBehaviour {
 		if (displayGUI) {
 			myDeathPopUp.display("Recommencer", "Quitter", "Menu", "", "Game Over");
 		}
-
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CameraScript : MonoBehaviour {
 
+
     private bool freeCamera = false;
 	public Vector2 speedFreeCamera = new Vector2(50, 50);
 	private Vector2 movement = new Vector2();
@@ -17,6 +18,7 @@ public class CameraScript : MonoBehaviour {
 		new Vector2(0f, gravity),//Haut
 		new Vector2(-gravity, 0f)};//Droite
 	public static int selectedGravity = 0;
+
 	// Use this for initialization
 	void Start () {
 		selectedGravity = 0;
@@ -98,4 +100,5 @@ public class CameraScript : MonoBehaviour {
 		}
 		return vector;
 		}
+
 }

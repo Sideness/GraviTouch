@@ -13,13 +13,26 @@ public class PlayerScript : MonoBehaviour
 	private static int rotationIndex = -1;
 
 	private bool isCntrolable = true;
-
+    private Rect mobileRightRect;
+    private Rect mobileLeftRect;
 
 	// 2 - Stockage du mouvement
 	private Vector2 movement;
 	private bool RightOrLeft; // Right = 0 , Left = 1;
 	private float rotation = 0;
 	private bool changeGravity = false;
+
+    public PlayerScript(){
+        mobileLeftRect = new Rect(
+                0, 0,
+                Screen.width * 0.5f,
+                Screen.height);
+        mobileRightRect = new Rect(
+                Screen.width * 0.5f, 0,
+                Screen.width * 0.5f,
+                Screen.height);
+    }
+
 
 	void Start(){
 
@@ -41,15 +54,30 @@ public class PlayerScript : MonoBehaviour
 			movement = CameraScript.applyGravity (movement);
 
 
-						if (Input.GetButtonDown ("RotateRight")) {
-								changeGravity = true;
-								RightOrLeft = false;
+			if (Input.GetButtonDown ("RotateRight")) {
+					changeGravity = true;
+					RightOrLeft = false;
 						
-						} else	if (Input.GetButtonDown ("RotateLeft")) {
-								changeGravity = true;
-								RightOrLeft = true;
-						}
-				}
+			} else	if (Input.GetButtonDown ("RotateLeft")) {
+					changeGravity = true;
+					RightOrLeft = true;
+			}
+
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                //if (Input.GetTouch(0).deltaPosition )
+                if (mobileLeftRect.Contains(Input.GetTouch(0).position))
+                {
+                    changeGravity = true;
+                    RightOrLeft = true;
+                }
+                else if (mobileRightRect.Contains(Input.GetTouch(0).position))
+                {
+                    changeGravity = true;
+                    RightOrLeft = false;
+                }
+            }
+	    }
 
 
 
