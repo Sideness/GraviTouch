@@ -43,7 +43,7 @@ public class PopUpScript : MonoBehaviour {
 		//Chargement de la texture des boutons Xbox
 		string texture = @"Assets\Texture\XboxControllerButton.png";
 		Texture2D inputTexture = (Texture2D)Resources.LoadAssetAtPath(texture, typeof(Texture2D));
-		float buttonWidth = 100, buttonHeight = 50;
+		float buttonWidth = Screen.width * 0.20f, buttonHeight = Screen.height * 0.15f;
 
 
 		Texture2D textureBox = new Texture2D(1, 1);
@@ -63,10 +63,15 @@ public class PopUpScript : MonoBehaviour {
 
 		GUIStyle  centeredStyle = GUI.skin.GetStyle("Label");
 		centeredStyle.alignment = TextAnchor.UpperCenter;
-		centeredStyle.fontSize = 40;
+        centeredStyle.fontSize = (int)(Screen.width * 0.04f);
 		centeredStyle.normal.textColor = Color.white;
 		
-		GUI.Label (new Rect (0 - slidingPosition, Screen.height * 0.20f, slidingPanel, buttonHeight * 2), labelMessage, centeredStyle);
+		GUI.Label (new Rect (0 - slidingPosition, Screen.height * 0.10f, slidingPanel, buttonHeight * 2), labelMessage, centeredStyle);
+
+        centeredStyle = GUI.skin.GetStyle("Button");
+        centeredStyle.alignment = TextAnchor.MiddleCenter;
+        centeredStyle.fontSize = (int)(Screen.width * 0.02f);
+        centeredStyle.normal.textColor = Color.white;
 
 		//On vérifie si on joue avec un Joystick
 		if (Input.GetJoystickNames().Length > 0){
@@ -79,7 +84,8 @@ public class PopUpScript : MonoBehaviour {
 
 
 			if (labelA != ""){
-				if (GUI.Button (new Rect (buttonPositionX, Screen.height * 0.40f, buttonWidth, buttonHeight), labelA)) {
+                if (GUI.Button(new Rect(buttonPositionX, Screen.height * 0.25f, buttonWidth, buttonHeight), labelA, centeredStyle))
+                {
 					if (myActionA == null){
 						throw new UnityException("ButtonA action is not binded");
 					}
@@ -87,7 +93,8 @@ public class PopUpScript : MonoBehaviour {
 				}
 			}
 			if (labelB != ""){
-				if (GUI.Button (new Rect (buttonPositionX, Screen.height * 0.50f, buttonWidth, buttonHeight), labelB)) {
+                if (GUI.Button(new Rect(buttonPositionX, Screen.height * 0.45f, buttonWidth, buttonHeight), labelB, centeredStyle))
+                {
 					if (myActionB == null){
 						throw new UnityException("ButtonB action is not binded");
 					}
@@ -95,7 +102,8 @@ public class PopUpScript : MonoBehaviour {
 				}
 			}
 			if (labelX != ""){
-				if (GUI.Button (new Rect (buttonPositionX, Screen.height * 0.60f, buttonWidth, buttonHeight), labelX)) {
+                if (GUI.Button(new Rect(buttonPositionX, Screen.height * 0.65f, buttonWidth, buttonHeight), labelX, centeredStyle))
+                {
 					if (myActionX == null){
 						throw new UnityException("ButtonX action is not binded");
 					}
@@ -103,7 +111,8 @@ public class PopUpScript : MonoBehaviour {
 				}
 			}
 			if (labelY != ""){
-				if (GUI.Button (new Rect (buttonPositionX, Screen.height * 0.70f, buttonWidth, buttonHeight), labelY)) {
+                if (GUI.Button(new Rect(buttonPositionX, Screen.height * 0.85f, buttonWidth, buttonHeight), labelY, centeredStyle))
+                {
 					if (myActionY == null){
 						throw new UnityException("ButtonY action is not binded");
 					}

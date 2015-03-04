@@ -12,6 +12,8 @@ public class CameraScript : MonoBehaviour {
 	public static float gravity = 9.89f;
 	public static float defaultZoom = 9.0F;
 	private float currentZoom = 0f;
+    private int buttonWidth = 135;
+    private int buttonHeight = 145;
 	private Vector3 velocity = Vector3.zero;
 	public static Vector2[] gravityDirections = new []{new Vector2(0f, -gravity), //Normal
 		new Vector2(gravity, 0f),//Gauche 											
@@ -64,6 +66,16 @@ public class CameraScript : MonoBehaviour {
 		}
 	}
 
+    public void OnGUI()
+    {
+        Rect rect = new Rect(
+                (Screen.width * 0.90f) - (buttonWidth / 2),
+                (Screen.height * 0.10f) - (buttonHeight / 2),
+                buttonWidth,
+                buttonHeight
+                );
+    }
+
 	void FixedUpdate()
 	{
 
@@ -99,6 +111,5 @@ public class CameraScript : MonoBehaviour {
 			vector.y = -tmpX;
 		}
 		return vector;
-		}
-
+	}
 }
