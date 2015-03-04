@@ -12,14 +12,13 @@ public class CameraScript : MonoBehaviour {
 	public static float gravity = 9.89f;
 	public static float defaultZoom = 9.0F;
 	private float currentZoom = 0f;
-    private int buttonWidth = 135;
-    private int buttonHeight = 145;
 	private Vector3 velocity = Vector3.zero;
 	public static Vector2[] gravityDirections = new []{new Vector2(0f, -gravity), //Normal
 		new Vector2(gravity, 0f),//Gauche 											
 		new Vector2(0f, gravity),//Haut
 		new Vector2(-gravity, 0f)};//Droite
 	public static int selectedGravity = 0;
+    private float buttonWidth = Screen.width * 0.10f, buttonHeight = Screen.height * 0.07f;
 
 	// Use this for initialization
 	void Start () {
@@ -68,12 +67,17 @@ public class CameraScript : MonoBehaviour {
 
     public void OnGUI()
     {
-        Rect rect = new Rect(
+        GUIStyle centeredStyle = new GUIStyle(GUI.skin.GetStyle("Button"));
+        centeredStyle.alignment = TextAnchor.MiddleCenter;
+        centeredStyle.fontSize = (int)(Screen.width * 0.01f);
+        centeredStyle.normal.textColor = Color.white;
+
+        GUI.Button(new Rect(
                 (Screen.width * 0.90f) - (buttonWidth / 2),
                 (Screen.height * 0.10f) - (buttonHeight / 2),
                 buttonWidth,
                 buttonHeight
-                );
+                ), "salut", centeredStyle);
     }
 
 	void FixedUpdate()

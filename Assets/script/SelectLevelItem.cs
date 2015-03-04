@@ -15,8 +15,6 @@ public class SelectLevelItem : MonoBehaviour {
 		if (Chrono)
 			chronoChar = '1';
 
-
-		string texture = @"Assets\Texture\Menu\"+nbStar+"_"+chronoChar+".png";
 		aTexture = Resources.Load ("Texture/Menu/" + nbStar + "_" + chronoChar) as Texture2D;
 		show = false;
 	}
@@ -41,7 +39,7 @@ public class SelectLevelItem : MonoBehaviour {
 			aTexture,ScaleMode.StretchToFill, true, 10.0f);
 
 
-		GUIStyle  centeredStyle = GUI.skin.GetStyle("Label");
+		GUIStyle  centeredStyle = new GUIStyle(GUI.skin.GetStyle("Label"));
 		centeredStyle.alignment = TextAnchor.UpperCenter;
 		if (selected)
 			centeredStyle.fontSize = 20;

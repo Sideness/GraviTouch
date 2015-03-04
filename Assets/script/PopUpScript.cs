@@ -61,14 +61,14 @@ public class PopUpScript : MonoBehaviour {
 
 		float buttonPositionX = slidingPanel / 2 - buttonWidth / 2 - slidingPosition;
 
-		GUIStyle  centeredStyle = GUI.skin.GetStyle("Label");
+		GUIStyle centeredStyle = new GUIStyle(GUI.skin.GetStyle("Label"));
 		centeredStyle.alignment = TextAnchor.UpperCenter;
         centeredStyle.fontSize = (int)(Screen.width * 0.04f);
 		centeredStyle.normal.textColor = Color.white;
 		
 		GUI.Label (new Rect (0 - slidingPosition, Screen.height * 0.10f, slidingPanel, buttonHeight * 2), labelMessage, centeredStyle);
 
-        centeredStyle = GUI.skin.GetStyle("Button");
+        centeredStyle = new GUIStyle(GUI.skin.GetStyle("Button"));
         centeredStyle.alignment = TextAnchor.MiddleCenter;
         centeredStyle.fontSize = (int)(Screen.width * 0.02f);
         centeredStyle.normal.textColor = Color.white;

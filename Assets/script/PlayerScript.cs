@@ -107,10 +107,10 @@ public class PlayerScript : MonoBehaviour
 		// 5 - Déplacement
 		if (isCntrolable)
 		{
-						rigidbody2D.velocity = movement;
+						GetComponent<Rigidbody2D>().velocity = movement;
 				if (Camera.current != null)
 			{
-						Camera.current.transform.position = new Vector3 (rigidbody2D.position.x, rigidbody2D.position.y, -10f);
+						Camera.current.transform.position = new Vector3 (GetComponent<Rigidbody2D>().position.x, GetComponent<Rigidbody2D>().position.y, -10f);
 						Camera.current.orthographicSize = CameraScript.defaultZoom;
 			}
 
