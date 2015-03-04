@@ -1,0 +1,27 @@
+<levels>
+	<level>
+		<title>scene0</title>
+		<score>1</score>
+		<time>true</time>
+	</level>
+	<level>
+		<title>scene1</title>
+		<score>2</score>
+		<time>false</time>
+	</level>
+	<level>
+		<title>scene2</title>
+		<score>3</score>
+		<time>true</time>
+	</level>
+	<level>
+		<title>scene3</title>
+		<score>2</score>
+		<time>true</time>
+	</level>
+	<level>
+		<title>scene4</title>
+		<score>3</score>
+		<time>false</time>
+	</level>
+</levels>

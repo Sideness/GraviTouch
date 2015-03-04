@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 using System.Timers;
 
-using System.IO;
-using UnityEngine;
+using System.Xml;
 
 /// <summary>
 /// Script de l'écran titre
@@ -15,98 +16,123 @@ public class SelectionScript : MonoBehaviour
 	private int buttonWidth = 135;
 	private int buttonHeight = 145;
 	private int NbLvlLigne = 5;
-	private int selectedAddedSize= 14;
 	private static bool canMove = true;
 	private static Timer aTimer;
 	private bool mouseOnLevel = false;
 	public	float ColorMaxInit = 200;
 	public float ColorMinInit = 30;
-	
+    
+    private static List<Dictionary<string, string>> levels;
 	private static float colorMax;
 	private static float colorMin;
 	private static int colorState = 0;
 	private static float colorStep = 0.01f;
-	FileInfo[] fichiers;
 	
 	private Color color = new Color(colorMax,colorMin,colorMin);
 	
 	public static void nextLevel(){
-		indexLevel++;
+        indexLevel++;
 		
-		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
-		FileInfo[] fichiers = dir.GetFiles("*.unity");
-		
-		Application.LoadLevel(fichiers[indexLevel].Name.Substring(0, fichiers[indexLevel].Name.Length - 6));
+        Application.LoadLevel(levels[indexLevel]["title"]);
 	}
 
 	public static bool isLastLevel(){
-		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
-		FileInfo[] fichiers = dir.GetFiles("*.unity");
-		return indexLevel == fichiers.Length - 1;
+        return indexLevel == levels.Count - 1;
 	}
 	
 	public static void resetLevel(){
-		
-		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
-		FileInfo[] fichiers = dir.GetFiles("*.unity");
-		
-		Application.LoadLevel(fichiers[indexLevel].Name.Substring(0, fichiers[indexLevel].Name.Length - 6));
-	}
-	
-	public SelectionScript()
-	{
-		colorMax = ColorMaxInit/255f;
-		colorMin = ColorMinInit/255f;
+
+        Application.LoadLevel(levels[indexLevel]["title"]);
 	}
 	
 	void Start()
 	{
 		
 		
-		if (Camera.current != null)
-			Camera.current.backgroundColor = new Color(colorMax,colorMin,colorMin);
-		
-		
-		
+	    if (Camera.current != null)
+		    Camera.current.backgroundColor = new Color(colorMax,colorMin,colorMin);
+
+        levels = new List<Dictionary<string, string>>();
+        Dictionary<string, string> obj;
+
+        colorMax = ColorMaxInit / 255f;
+        colorMin = ColorMinInit / 255f;
+
+        TextAsset textLevels = (TextAsset)Resources.Load("Levels");
+        XmlDocument xmlLevels = new XmlDocument();
+        xmlLevels.LoadXml(textLevels.text);
+
+        XmlNodeList levelsList = xmlLevels.GetElementsByTagName("level"); // array of the level nodes.
+
+        foreach (XmlNode levelInfo in levelsList)
+        {
+            XmlNodeList levelcontent = levelInfo.ChildNodes;
+            obj = new Dictionary<string, string>(); // Create a object(Dictionary) to colect the both nodes inside the level node and then put into levels[] array.
+
+            foreach (XmlNode levelsItens in levelcontent) // levels itens nodes.
+            {
+                if (levelsItens.Name == "title")
+                {
+                    obj.Add("title", levelsItens.InnerText); // put this in the dictionary.
+                }
+                if (levelsItens.Name == "score")
+                {
+                    obj.Add("score", levelsItens.InnerText); // put this in the dictionary.
+                }
+                if (levelsItens.Name == "time")
+                {
+                    obj.Add("time", levelsItens.InnerText); // put this in the dictionary.
+                }
+            }
+            levels.Add(obj);
+        }
 	}
 	
 	void OnGUI()
 	{
 		int x = 0;
 		int y = 0;
-		
-		DirectoryInfo dir = new DirectoryInfo(@".\assets\scene\Niveaux");
-		fichiers = dir.GetFiles("*.unity");
-		mouseOnLevel = false;
-		int cptLevel = 0;
-		foreach (FileInfo fichier in fichiers)
-		{
-			x += buttonWidth + 20;
-			if (cptLevel % NbLvlLigne == 0)
-			{
-				y += buttonHeight + 20;
-				x = 0;
-			}
-			Rect rect = new Rect(
-				(Screen.width *0.10f) - (buttonWidth / 2) + x,
-				(Screen.height *0.10f) - (buttonHeight / 2) + y,
-				buttonWidth,
-				buttonHeight
-				);
-			
-			if (rect.Contains (Event.current.mousePosition))
-			{
-				indexLevel = cptLevel;
-				mouseOnLevel = true;
-			}
-			
-			
-			new SelectLevelItem(fichier.Name.Remove (fichier.Name.IndexOf (".")), cptLevel % 4,cptLevel % 2 == 0).display(rect,cptLevel == indexLevel);
-			
-			cptLevel++;
-			
-			
-		}
+
+        mouseOnLevel = false;
+        int cptLevel = 0;
+        foreach (Dictionary<string, string> level in levels)
+        {
+            x += buttonWidth + 20;
+            if (cptLevel % NbLvlLigne == 0)
+            {
+                y += buttonHeight + 20;
+                x = 0;
+            }
+            Rect rect = new Rect(
+                (Screen.width * 0.10f) - (buttonWidth / 2) + x,
+                (Screen.height * 0.10f) - (buttonHeight / 2) + y,
+                buttonWidth,
+                buttonHeight
+                );
+
+            if (rect.Contains(Event.current.mousePosition))
+            {
+                indexLevel = cptLevel;
+                mouseOnLevel = true;
+            }
+
+            string nameLevel;
+            level.TryGetValue("title", out nameLevel);
+
+            string nbStar;
+            level.TryGetValue("score", out nbStar);
+            int nbStarInt = int.Parse(nbStar);
+
+            string chrono;
+            level.TryGetValue("time", out chrono);
+            bool chronoBool = bool.TryParse(chrono, out chronoBool);
+
+            new SelectLevelItem( nameLevel, nbStarInt , chronoBool ).display(rect, indexLevel==cptLevel);
+
+            cptLevel++;
+
+
+        }
 		
 		
 	}
@@ -121,7 +147,7 @@ public class SelectionScript : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0) && mouseOnLevel)
 		{
-			Application.LoadLevel(fichiers[indexLevel].Name.Remove(fichiers[indexLevel].Name.IndexOf (".")));
+            Application.LoadLevel(levels[indexLevel]["title"]);
 		}
 		
 		if (Camera.current != null) {
