@@ -24,4 +24,9 @@
 		<score>3</score>
 		<time>false</time>
 	</level>
+	<level>
+		<title>scene6</title>
+		<score>3</score>
+		<time>false</time>
+	</level>
 </levels>
