@@ -13,8 +13,8 @@ using System.Xml;
 public class SelectionScript : MonoBehaviour
 {
 	protected static int indexLevel = 0;
-	private int buttonWidth = 135;
-	private int buttonHeight = 145;
+	private int buttonWidth = (int)(Screen.width * 0.10f);
+	private int buttonHeight = (int)(Screen.width * 9 / 16 * 0.20f);
 	private int NbLvlLigne = 5;
 	private static bool canMove = true;
 	private static Timer aTimer;

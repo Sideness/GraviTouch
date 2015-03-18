@@ -42,15 +42,11 @@ public class SelectLevelItem : MonoBehaviour {
 		GUIStyle  centeredStyle = new GUIStyle(GUI.skin.GetStyle("Label"));
 		centeredStyle.alignment = TextAnchor.UpperCenter;
 		if (selected)
-			centeredStyle.fontSize = 20;
+			centeredStyle.fontSize = (int)(Screen.width * 0.015f);
 		else
-			centeredStyle.fontSize = 15;
-
-
+            centeredStyle.fontSize = (int)(Screen.width * 0.011f);
 
 		GUI.Label (new Rect (rect.width/2-50+rect.x, rect.height/2-25+rect.y, 100, 50), levelName, centeredStyle);
 
 	}
-	
-
 }
