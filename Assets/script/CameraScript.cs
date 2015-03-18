@@ -54,21 +54,21 @@ public class CameraScript : MonoBehaviour {
 		{
             //var X = ((Input.GetTouch(0).deltaPosition.x + Input.GetTouch(1).deltaPosition.x));
             //var Z = ((Input.GetTouch(0).deltaPosition.y + Input.GetTouch(1).deltaPosition.y));
-            float multiply = Camera.current.orthographicSize * 0.0017f;
+            //float multiply = Camera.current.orthographicSize * 0.0017f;
 
-            float moveSpeed = 5.0f;
-            //Camera.current.transform.position = Vector3.Lerp( transform.position, ( transform.position - new Vector3(X * multiply, 0, Z * multiply) ), Time.deltaTime * moveSpeed );
-			
-			if (Input.GetButtonDown ("CameraZoomPlus")) 
-			{
-				currentZoom = zoomSpeed* -1;
+            //float moveSpeed = 5.0f;
+            //Camera.current.transform.position = Vector3.Lerp(transform.position, (transform.position - new Vector3(X * multiply, 0, Z * multiply)), Time.deltaTime * moveSpeed);
 
-			}
-			else if (Input.GetButtonDown ("CameraZoomMinus")) 
-			{
-					currentZoom = zoomSpeed ;
+            if (Input.GetButtonDown("CameraZoomPlus"))
+            {
+                currentZoom = zoomSpeed * -1;
 
-			}
+            }
+            else if (Input.GetButtonDown("CameraZoomMinus"))
+            {
+                currentZoom = zoomSpeed;
+
+            }
 		
 		
 		    float inputX = Input.GetAxis("Horizontal");

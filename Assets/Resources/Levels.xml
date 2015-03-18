@@ -25,6 +25,11 @@
 		<time>false</time>
 	</level>
 	<level>
+		<title>scene5</title>
+		<score>2</score>
+		<time>false</time>
+	</level>
+	<level>
 		<title>scene6</title>
 		<score>3</score>
 		<time>false</time>
