@@ -42,7 +42,7 @@ public class PopUpScript : MonoBehaviour {
 	                    string labelMessage = ""){
 		//Chargement de la texture des boutons Xbox
 		string texture = @"Assets\Texture\XboxControllerButton.png";
-		Texture2D inputTexture = (Texture2D)Resources.LoadAssetAtPath(texture, typeof(Texture2D));
+		//Texture2D inputTexture = (Texture2D)Resources.LoadAssetAtPath(texture, typeof(Texture2D));
 		float buttonWidth = Screen.width * 0.20f, buttonHeight = Screen.height * 0.15f;
 
 

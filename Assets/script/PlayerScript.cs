@@ -21,6 +21,7 @@ public class PlayerScript : MonoBehaviour
 	private bool RightOrLeft; // Right = 0 , Left = 1;
 	private float rotation = 0;
 	private bool changeGravity = false;
+    private Vector2 touchPoint = new Vector2();
 
     public PlayerScript(){
         mobileLeftRect = new Rect(
@@ -65,13 +66,14 @@ public class PlayerScript : MonoBehaviour
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
+                touchPoint = invertAxisTouch(Input.GetTouch(0).position);
                 //if (Input.GetTouch(0).deltaPosition )
-                if (mobileLeftRect.Contains(Input.GetTouch(0).position))
+                if (mobileLeftRect.Contains(touchPoint))
                 {
                     changeGravity = true;
                     RightOrLeft = true;
                 }
-                else if (mobileRightRect.Contains(Input.GetTouch(0).position))
+                else if (mobileRightRect.Contains(touchPoint) && CameraScript.freeCameraRect.Contains(touchPoint) == false)
                 {
                     changeGravity = true;
                     RightOrLeft = false;
@@ -150,4 +152,13 @@ public class PlayerScript : MonoBehaviour
 		Physics2D.gravity = CameraScript.gravityDirections [CameraScript.selectedGravity];
 
 	}
+
+    public static Vector2 invertAxisTouch(Vector2 vect)
+    {
+        Vector2 vectTmp = new Vector2(vect.x, vect.y);
+        vectTmp.y = Screen.height - vectTmp.y;
+
+        return vectTmp;
+    }
+
 }

@@ -18,10 +18,19 @@ public class CameraScript : MonoBehaviour {
 		new Vector2(0f, gravity),//Haut
 		new Vector2(-gravity, 0f)};//Droite
 	public static int selectedGravity = 0;
-    private float buttonWidth = Screen.width * 0.10f, buttonHeight = Screen.height * 0.07f;
+    private static float buttonWidth = Screen.width * 0.10f, buttonHeight = Screen.height * 0.07f;
+    public static Rect freeCameraRect;
+    private GUIStyle centeredStyle = new GUIStyle();
 
-	// Use this for initialization
-	void Start () {
+	public CameraScript(){
+
+        freeCameraRect = new Rect((Screen.width * 0.90f) - (buttonWidth / 2), (Screen.height * 0.05f) - (buttonHeight / 2),
+                buttonWidth,
+                buttonHeight);
+    }
+	
+    
+    void Start () {
 		selectedGravity = 0;
 		Physics2D.gravity = gravityDirections [selectedGravity];
 	}
@@ -43,7 +52,12 @@ public class CameraScript : MonoBehaviour {
 
 		if (freeCamera)
 		{
+            //var X = ((Input.GetTouch(0).deltaPosition.x + Input.GetTouch(1).deltaPosition.x));
+            //var Z = ((Input.GetTouch(0).deltaPosition.y + Input.GetTouch(1).deltaPosition.y));
+            float multiply = Camera.current.orthographicSize * 0.0017f;
 
+            float moveSpeed = 5.0f;
+            //Camera.current.transform.position = Vector3.Lerp( transform.position, ( transform.position - new Vector3(X * multiply, 0, Z * multiply) ), Time.deltaTime * moveSpeed );
 			
 			if (Input.GetButtonDown ("CameraZoomPlus")) 
 			{
@@ -57,27 +71,32 @@ public class CameraScript : MonoBehaviour {
 			}
 		
 		
-		float inputX = Input.GetAxis("Horizontal");
-		float inputY = Input.GetAxis ("Vertical");
-		movement = new Vector2(speedFreeCamera.x * inputX, speedFreeCamera.y* inputY);
-			movement=applyGravity (movement);
+		    float inputX = Input.GetAxis("Horizontal");
+		    float inputY = Input.GetAxis ("Vertical");
+		    movement = new Vector2(speedFreeCamera.x * inputX, speedFreeCamera.y* inputY);
+		    movement = applyGravity (movement);
 
 		}
 	}
 
     public void OnGUI()
     {
-        GUIStyle centeredStyle = new GUIStyle(GUI.skin.GetStyle("Button"));
+
+
+
+        centeredStyle = new GUIStyle(GUI.skin.GetStyle("Button"));
         centeredStyle.alignment = TextAnchor.MiddleCenter;
         centeredStyle.fontSize = (int)(Screen.width * 0.01f);
         centeredStyle.normal.textColor = Color.white;
 
-        GUI.Button(new Rect(
-                (Screen.width * 0.90f) - (buttonWidth / 2),
-                (Screen.height * 0.10f) - (buttonHeight / 2),
-                buttonWidth,
-                buttonHeight
-                ), "salut", centeredStyle);
+        if(GUI.Button(freeCameraRect, "Camera", centeredStyle))
+        {
+            Debug.Log("FreeCamera");
+            freeCamera = freeCamera ? false : true;
+            PlayerScript player = GameObject.Find("Perso").GetComponent<PlayerScript>();
+            if (player != null)
+                player.setControlable(!freeCamera);
+        }
     }
 
 	void FixedUpdate()
