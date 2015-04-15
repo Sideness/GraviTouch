@@ -44,6 +44,11 @@ public class SelectionScript : MonoBehaviour
 
         Application.LoadLevel(levels[indexLevel]["title"]);
 	}
+
+    public static float getTargetTime()
+    {
+        return float.Parse(levels[indexLevel]["targetTime"]);
+    }
 	
 	void Start()
 	{
@@ -82,6 +87,10 @@ public class SelectionScript : MonoBehaviour
                 if (levelsItens.Name == "time")
                 {
                     obj.Add("time", levelsItens.InnerText); // put this in the dictionary.
+                }
+                if (levelsItens.Name == "targetTime")
+                {
+                    obj.Add("targetTime", levelsItens.InnerText); // put this in the dictionary.
                 }
             }
             levels.Add(obj);

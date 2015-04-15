@@ -38,7 +38,6 @@ public class CameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
 		if (Input.GetButtonDown ("FreeCamera")) {
 			Debug.Log ("FreeCamera");
 			freeCamera = freeCamera?false:true ;

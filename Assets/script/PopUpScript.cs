@@ -41,7 +41,7 @@ public class PopUpScript : MonoBehaviour {
 	public void display(string labelA = "", string labelB = "", string labelX = "", string labelY = "",
 	                    string labelMessage = ""){
 		//Chargement de la texture des boutons Xbox
-		string texture = @"Assets\Texture\XboxControllerButton.png";
+		//string texture = @"Assets\Texture\XboxControllerButton.png";
 		//Texture2D inputTexture = (Texture2D)Resources.LoadAssetAtPath(texture, typeof(Texture2D));
 		float buttonWidth = Screen.width * 0.20f, buttonHeight = Screen.height * 0.15f;
 
@@ -74,10 +74,10 @@ public class PopUpScript : MonoBehaviour {
         centeredStyle.normal.textColor = Color.white;
 
 		//On vérifie si on joue avec un Joystick
-		if (Input.GetJoystickNames().Length > 0){
-			//GUI.DrawTexture(new Rect (Screen.width / 2 - 250/2, Screen.height*0.75f - 250/2, 250, 250), inputTexture, ScaleMode.StretchToFill, true, 30.0f);
+        //if (Input.GetJoystickNames().Length > 0){
+        //    //GUI.DrawTexture(new Rect (Screen.width / 2 - 250/2, Screen.height*0.75f - 250/2, 250, 250), inputTexture, ScaleMode.StretchToFill, true, 30.0f);
 
-		}else{
+        //}else{
 
 
 			//GUI.Label(new Rect(0, 0, Screen.width * 0.3f, Screen.height), new Color());
@@ -118,7 +118,7 @@ public class PopUpScript : MonoBehaviour {
 					}
 					myActionY();
 				}
-			}
+            //}
 		}
 	}
 }
