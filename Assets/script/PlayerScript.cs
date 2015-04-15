@@ -90,6 +90,8 @@ public class PlayerScript : MonoBehaviour
 	{
 		Debug.Log(collider.gameObject.GetType().ToString());
 		if (collider.gameObject.GetComponent<BadScript> ()) {
+            MyTime time = GameObject.Find("Main Camera").GetComponent<MyTime>();
+            time.endTimer();
 			collider.gameObject.GetComponent<BadScript> ().ResetLevel();
 			Object.Destroy(this);
 		}

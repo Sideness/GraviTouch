@@ -40,6 +40,11 @@ public class EndDoorScript : MonoBehaviour {
 
 	public void EndLevel(){
 		displayGUI = true;
+        MyTime time = GameObject.Find("Main Camera").GetComponent<MyTime>();
+        if (time.endTimer())
+        {
+            bool test = time.endTimer();
+        }
 	}
 
 	void OnGUI(){
