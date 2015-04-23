@@ -5,7 +5,7 @@ public class MyTime : MonoBehaviour {
     public float timer = 0.0f;
     private float timeNeeded;
     private bool running = false;
-    GUIStyle style;
+    public GUIStyle style;
 
     public void Start()
     {

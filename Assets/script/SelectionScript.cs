@@ -49,23 +49,43 @@ public class SelectionScript : MonoBehaviour
     {
         return float.Parse(levels[indexLevel]["targetTime"]);
     }
-	
-	void Start()
-	{
-		
-		
-	    if (Camera.current != null)
-		    Camera.current.backgroundColor = new Color(colorMax,colorMin,colorMin);
+
+    public static int getNumberDeath()
+    {
+        return int.Parse(levels[indexLevel]["deaths"]);
+    }
+
+    public static void writeXML(string attribut, string value)
+    {
+        StreamReader textLevels = new StreamReader(Application.persistentDataPath + "/levels.xml");
+        XmlDocument xmlLevels = new XmlDocument();
+        xmlLevels.LoadXml(textLevels.ReadToEnd());
+        XmlNodeList levelList = xmlLevels.SelectNodes("//levels/level");
+        XmlNodeList levelcontent = levelList[indexLevel].ChildNodes;
+        foreach (XmlNode levelsItens in levelcontent)
+        {
+            if (levelsItens.Name == attribut)
+            {
+                levelsItens.InnerText = value;
+            }
+        }
+        textLevels.Close();
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/levels.xml");
+
+        xmlLevels.Save(writer);
+        writer.Close();
+        readXML();
+    }
+
+    public static void readXML(){
 
         levels = new List<Dictionary<string, string>>();
         Dictionary<string, string> obj;
 
-        colorMax = ColorMaxInit / 255f;
-        colorMin = ColorMinInit / 255f;
-
-        TextAsset textLevels = (TextAsset)Resources.Load("Levels");
+        StreamReader textLevels = new StreamReader(Application.persistentDataPath + "/levels.xml");
         XmlDocument xmlLevels = new XmlDocument();
-        xmlLevels.LoadXml(textLevels.text);
+        xmlLevels.LoadXml(textLevels.ReadToEnd());
+        textLevels.Close();
 
         XmlNodeList levelsList = xmlLevels.GetElementsByTagName("level"); // array of the level nodes.
 
@@ -92,10 +112,39 @@ public class SelectionScript : MonoBehaviour
                 {
                     obj.Add("targetTime", levelsItens.InnerText); // put this in the dictionary.
                 }
+                if (levelsItens.Name == "deaths")
+                {
+                    obj.Add("deaths", levelsItens.InnerText); // put this in the dictionary.
+                }
             }
             levels.Add(obj);
         }
-	}
+    }
+	
+	void Start()
+    {
+        {
+            if (File.Exists(Application.persistentDataPath + "/levels.xml") == false)
+            {
+                TextAsset textLevelsA = (TextAsset)Resources.Load("Levels");
+                XmlDocument xmlLevelsA = new XmlDocument();
+                xmlLevelsA.LoadXml(textLevelsA.text);
+
+                StreamWriter writer = new StreamWriter(Application.persistentDataPath + "/levels.xml");
+
+                xmlLevelsA.Save(writer);
+                writer.Close();
+            }
+        }
+
+        if (Camera.current != null)
+            Camera.current.backgroundColor = new Color(colorMax, colorMin, colorMin);
+
+        colorMax = ColorMaxInit / 255f;
+        colorMin = ColorMinInit / 255f;
+
+        readXML();
+    }
 	
 	void OnGUI()
 	{
@@ -134,7 +183,7 @@ public class SelectionScript : MonoBehaviour
 
             string chrono;
             level.TryGetValue("time", out chrono);
-            bool chronoBool = bool.TryParse(chrono, out chronoBool);
+            bool chronoBool = bool.Parse(chrono);
 
             new SelectLevelItem( nameLevel, nbStarInt , chronoBool ).display(rect, indexLevel==cptLevel);
 

@@ -51,6 +51,7 @@
      <Compile Include="Assets\script\ControllerMenu.cs" />
      <Compile Include="Assets\script\EndDoorScript.cs" />
      <Compile Include="Assets\script\MoveScript.cs" />
+     <Compile Include="Assets\script\MyDeath.cs" />
      <Compile Include="Assets\script\MyTime.cs" />
      <Compile Include="Assets\script\PlayerScript.cs" />
      <Compile Include="Assets\script\PopUpScript.cs" />

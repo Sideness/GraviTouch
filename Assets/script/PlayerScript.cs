@@ -91,7 +91,13 @@ public class PlayerScript : MonoBehaviour
 		Debug.Log(collider.gameObject.GetType().ToString());
 		if (collider.gameObject.GetComponent<BadScript> ()) {
             MyTime time = GameObject.Find("Main Camera").GetComponent<MyTime>();
+            if (SelectionScript.getTargetTime() >= time.timer)
+            {
+                SelectionScript.writeXML("time","true");
+            }
             time.endTimer();
+            MyDeath death = GameObject.Find("Main Camera").GetComponent<MyDeath>();
+            death.AddDeath();
 			collider.gameObject.GetComponent<BadScript> ().ResetLevel();
 			Object.Destroy(this);
 		}
