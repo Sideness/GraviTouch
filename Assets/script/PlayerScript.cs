@@ -15,6 +15,7 @@ public class PlayerScript : MonoBehaviour
 	private bool isCntrolable = true;
     private Rect mobileRightRect;
     private Rect mobileLeftRect;
+    private bool isAlive = true;
 
 	// 2 - Stockage du mouvement
 	private Vector2 movement;
@@ -88,23 +89,31 @@ public class PlayerScript : MonoBehaviour
 
 	void OnCollisionEnter2D(Collision2D collider)
 	{
-		Debug.Log(collider.gameObject.GetType().ToString());
-		if (collider.gameObject.GetComponent<BadScript> ()) {
-            MyTime time = GameObject.Find("Main Camera").GetComponent<MyTime>();
-            if (SelectionScript.getTargetTime() >= time.timer)
+        if (isAlive)
+        {
+            Debug.Log(collider.gameObject.GetType().ToString());
+            if (collider.gameObject.GetComponent<BadScript>())
             {
-                SelectionScript.writeXML("time","true");
+                MyTime time = GameObject.Find("Main Camera").GetComponent<MyTime>();
+                if (SelectionScript.getTargetTime() >= time.timer)
+                {
+                    SelectionScript.writeXML("time", "true");
+                }
+                time.endTimer();
+                MyDeath death = GameObject.Find("Main Camera").GetComponent<MyDeath>();
+                death.AddDeath();
+                isAlive = false;
+                collider.gameObject.GetComponent<BadScript>().ResetLevel();
+                Object.Destroy(this);
+                return;
+
             }
-            time.endTimer();
-            MyDeath death = GameObject.Find("Main Camera").GetComponent<MyDeath>();
-            death.AddDeath();
-			collider.gameObject.GetComponent<BadScript> ().ResetLevel();
-			Object.Destroy(this);
-		}
-		else if (collider.gameObject.GetComponent<EndDoorScript> ()) {
-			collider.gameObject.GetComponent<EndDoorScript> ().EndLevel();
-			Object.Destroy(this);
-		}
+            else if (collider.gameObject.GetComponent<EndDoorScript>())
+            {
+                collider.gameObject.GetComponent<EndDoorScript>().EndLevel();
+                Object.Destroy(this);
+            }
+        }
 	}
 
 	public void setControlable(bool isControlable)

@@ -9,7 +9,7 @@ public class BadScript : MonoBehaviour {
 		myDeathPopUp = new PopUpScript();
 		myDeathPopUp.Bind(delegate(){SelectionScript.resetLevel();}, //boutonA
 		delegate(){Application.Quit();}, //boutonB
-		delegate(){Application.LoadLevel("menu");},
+		delegate(){Application.LoadLevel("selection");},
 		null);
 	}
 	
@@ -24,7 +24,7 @@ public class BadScript : MonoBehaviour {
 	
 	void OnGUI(){
 		if (displayGUI) {
-			myDeathPopUp.display("Recommencer", "Quitter", "Menu", "", "Game Over");
+			myDeathPopUp.display("Recommencer", "Quitter", "Choix du niveau", "", "Game Over");
 		}
 	}
 }

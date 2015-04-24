@@ -10,7 +10,7 @@ public class EndDoorScript : MonoBehaviour {
 		if (SelectionScript.isLastLevel()){
 			mySuccessPopUp = new PopUpScript ();
 			mySuccessPopUp.Bind (delegate() {
-				Application.LoadLevel ("menu");
+				Application.LoadLevel ("selection");
 			}, //boutonA
 			delegate() {
 				Application.Quit ();
@@ -26,7 +26,7 @@ public class EndDoorScript : MonoBehaviour {
 				Application.Quit ();
 			}, //boutonB
 			delegate() {
-				Application.LoadLevel ("menu");
+				Application.LoadLevel ("selection");
 			},
 			null);
 		}
@@ -50,9 +50,9 @@ public class EndDoorScript : MonoBehaviour {
 	void OnGUI(){
 		if (displayGUI) {
 			if (SelectionScript.isLastLevel()){
-				mySuccessPopUp.display("Menu", "Quitter", "", "", "Niveau et jeu terminés");
+				mySuccessPopUp.display("Choix du niveau", "Quitter", "", "", "Niveau et jeu terminés");
 			}else{
-				mySuccessPopUp.display("Niveau suivant", "Quitter", "Menu", "", "Niveau terminé");
+				mySuccessPopUp.display("Niveau suivant", "Quitter", "Choix du niveau", "", "Niveau terminé");
 			}
 		}
 	}
