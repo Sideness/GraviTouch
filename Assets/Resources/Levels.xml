@@ -56,4 +56,11 @@
     <targetTime>13</targetTime>
     <deaths>0</deaths>
   </level>
+  <level>
+    <title>scene8</title>
+    <score>0</score>
+    <time>false</time>
+    <targetTime>0</targetTime>
+    <deaths>0</deaths>
+  </level>
 </levels>
