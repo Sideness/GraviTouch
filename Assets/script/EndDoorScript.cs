@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class EndDoorScript : MonoBehaviour {
 
@@ -10,7 +11,7 @@ public class EndDoorScript : MonoBehaviour {
 		if (SelectionScript.isLastLevel()){
 			mySuccessPopUp = new PopUpScript ();
 			mySuccessPopUp.Bind (delegate() {
-				Application.LoadLevel ("selection");
+                SceneManager.LoadScene("selection");
 			}, //boutonA
 			delegate() {
 				Application.Quit ();
@@ -20,13 +21,13 @@ public class EndDoorScript : MonoBehaviour {
 		} else {
 			mySuccessPopUp = new PopUpScript ();
 			mySuccessPopUp.Bind (delegate() {
-				SelectionScript.nextLevel ();
+				SelectionScript.nextLevel();
 			}, //boutonA
 			delegate() {
 				Application.Quit ();
 			}, //boutonB
 			delegate() {
-				Application.LoadLevel ("selection");
+				SceneManager.LoadScene("selection");
 			},
 			null);
 		}
@@ -43,7 +44,7 @@ public class EndDoorScript : MonoBehaviour {
         MyTime time = GameObject.Find("Main Camera").GetComponent<MyTime>();
         if (time.endTimer())
         {
-            bool test = time.endTimer();
+            time.endTimer();
         }
 	}
 

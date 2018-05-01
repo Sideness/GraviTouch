@@ -22,7 +22,6 @@ public class SelectLevelItem : MonoBehaviour {
 	public void display(Rect rect,bool selected)
 	{
 			if (!aTexture) {
-				Debug.LogError ("Assign a Texture in the inspector.");
 				return;
 			}
 

@@ -1,11 +1,10 @@
 ﻿using System.IO;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using System.Timers;
 
 using System.Xml;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Script de l'écran titre
@@ -33,7 +32,7 @@ public class SelectionScript : MonoBehaviour
 	public static void nextLevel(){
         indexLevel++;
 		
-        Application.LoadLevel(levels[indexLevel]["title"]);
+        SceneManager.LoadScene(levels[indexLevel]["title"]);
 	}
 
 	public static bool isLastLevel(){
@@ -42,7 +41,7 @@ public class SelectionScript : MonoBehaviour
 	
 	public static void resetLevel(){
 
-        Application.LoadLevel(levels[indexLevel]["title"]);
+        SceneManager.LoadScene(levels[indexLevel]["title"]);
 	}
 
     public static float getTargetTime()
@@ -205,7 +204,7 @@ public class SelectionScript : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(0) && mouseOnLevel)
 		{
-            Application.LoadLevel(levels[indexLevel]["title"]);
+            SceneManager.LoadScene(levels[indexLevel]["title"]);
 		}
 		
 		if (Camera.current != null) {

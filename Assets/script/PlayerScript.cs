@@ -87,7 +87,6 @@ public class PlayerScript : MonoBehaviour
 	{
         if (isAlive)
         {
-            Debug.Log(collider.gameObject.GetType().ToString());
             if (collider.gameObject.GetComponent<BadScript>())
             {
                 MyTime time = GameObject.Find("Main Camera").GetComponent<MyTime>();

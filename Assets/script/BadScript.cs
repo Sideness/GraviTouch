@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BadScript : MonoBehaviour {
 	private PopUpScript myDeathPopUp;
@@ -9,7 +9,7 @@ public class BadScript : MonoBehaviour {
 		myDeathPopUp = new PopUpScript();
 		myDeathPopUp.Bind(delegate(){SelectionScript.resetLevel();}, //boutonA
 		delegate(){Application.Quit();}, //boutonB
-		delegate(){Application.LoadLevel("selection");},
+		delegate(){SceneManager.LoadScene("selection");},
 		null);
 	}
 	
